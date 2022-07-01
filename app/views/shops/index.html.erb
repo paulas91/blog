@@ -1,0 +1,9 @@
+<h1>Shops</h1>
+<p><%= link_to "Add new shop", new_shop_path %></p>
+<ul>
+  <% @shops.each do |shop| %>
+    <li>
+      <%= link_to shop.name, shop_path(shop) %>
+    </li>  
+  <%end%>
+</ul>
