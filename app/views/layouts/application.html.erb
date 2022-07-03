@@ -13,6 +13,7 @@
   <body>
     <div class="topnav">
       <%= link_to "Articles", articles_path %>
+      <%= link_to "Archived articles", articles_path(archived: "true")%>
       <%= link_to "Shops", shops_path %>
     </div> 
     <%= yield %>

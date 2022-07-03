@@ -1,6 +1,10 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = Article.all
+    @articles = if params["archived"] == "true"
+      Article.where(status: "archived")
+    else
+      Article.where(status: "public")
+    end
   end
 
   def show

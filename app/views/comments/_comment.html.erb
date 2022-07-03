@@ -1,6 +1,8 @@
-<p>
-  <strong><%=comment.commenter%>:</strong>
-  <%= comment.body %>
-</p>
+<% if comment.public? %>
+  <p>
+    <strong><%=comment.commenter%>:</strong>
+    <%= comment.body %>
+  </p>
+<%end%>  
 
 
