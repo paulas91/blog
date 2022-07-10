@@ -1,4 +1,10 @@
 <h1>Shops</h1>
+<%= form_for(:filter, { url: shops_path, method: :get }) do |f| %>
+  <%= fields_for :filter do |filter| %>
+    <%= filter.number_field :workers_number, value: @number %>
+  <% end %>
+  <%= f.submit %>
+<% end %>
 <p><%= link_to "Add new shop", new_shop_path %></p>
 <ul>
   <% @shops.each do |shop| %>
@@ -7,3 +13,4 @@
     </li>  
   <%end%>
 </ul>
+

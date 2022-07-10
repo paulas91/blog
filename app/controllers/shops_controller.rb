@@ -1,8 +1,15 @@
 class ShopsController < ApplicationController
   def index
-    @shops = Shop.all
+    @number = params.dig(:filter, :workers_number)&.to_i
+    # @ushops = if params[:filter] && params[:filter][:workers_number] 
+    @shops = if @number
+      Shop.where("workers_number >= #{@number}")
+      # User.where("workers_number >= )
+    else
+        Shop.all
+      end
   end
-
+    
   def show
     @shop = Shop.find(params[:id])
   end
