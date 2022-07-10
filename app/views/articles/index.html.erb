@@ -1,4 +1,12 @@
 <h1>Articles</h1>
+<%= form_for(:filter, { url: articles_path, method: :get }) do |f| %>
+<%= fields_for :filter do |filter| %>
+    <%= filter.date_field :created_at, value: @datetime  %>
+<% end %>
+<%= hidden_field :filter, :status, value: @status %>
+ <%= f.submit %>
+<% end %>
+
 <p><%= link_to "Add new article", new_article_path %></p>
 <ul>
   <% @articles.each do |article| %>

@@ -1,9 +1,28 @@
 class ArticlesController < ApplicationController
   def index
-    @articles = if params["archived"] == "true"
-      Article.where(status: "archived")
+    # TODO:
+    # @article = ArticleFilter.new(params).perform
+    # ##############
+    @datetime = params.dig(:filter, :created_at)
+      # @users = if params[:filter] && params[:filter][:year] 
+    @articles = if @datetime
+      Article.where("created_at >= '#{@datetime}'")
+        # User.where("birthday >= '#{params[:filter][:year]}-01-01'")
     else
-      Article.where(status: "public")
+      Article.all
+    end
+
+    @status = params.dig(:filter, :status)
+    @articles = if @status
+      if @status == "archived"
+        @articles.status_archived
+      elsif @status == "private"
+        @articles.status_private
+      else
+        @articles.status_public
+      end
+    else
+      @articles.status_public
     end
   end
 
@@ -41,7 +60,7 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id])
     @article.destroy
 
-    redirect_to root_path, status: :see_other
+    redirect_to article_path, status: :see_other
   end
 
   private
