@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   end
   resources :shops
   resources :users
+  # /articles/:id/change_status
+  post "/articles/:id/change_status" => "articles#change_status", :as => :articles_change_status
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

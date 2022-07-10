@@ -63,6 +63,15 @@ class ArticlesController < ApplicationController
     redirect_to article_path, status: :see_other
   end
 
+  def change_status
+    @article = Article.find(params[:id])
+    if @article.update(status: params[:status])
+      redirect_to @article
+    else 
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def article_params
