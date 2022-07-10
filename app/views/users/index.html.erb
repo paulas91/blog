@@ -1,4 +1,9 @@
 <h1>Users</h1>
+<%= form_for(:filter, { url: users_path, method: :get }) do |f| %>
+<%= select_year @year || Date.today.year, prefix: :filter, start_year: 1900, end_year: Date.today.year %>
+<%= f.submit %>
+<% end %>
+
 <p><%= link_to "Add new user", new_user_path %></p>
 <ul>
   <% @users.each do |user| %>

@@ -3,3 +3,10 @@
 <p><%= @user.birthday %></p>
 <p><%= link_to @user.email %></p>
 <p><%=  @user.phone %></p>
+<ul>
+  <li><%= link_to "Edit", edit_user_path(@user) %></li>
+  <li><%= link_to "Destroy", user_path(@user), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
