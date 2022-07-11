@@ -1,0 +1,6 @@
+<h1><%= @song.title %> </h1>
+<p><%= @song.body %></p>
+<p><%= @song.author %></p>
+<p><%= link_to "edit", edit_song_path(@song) %></p>
+<p><%= link_to "delete", song_path(@song), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>
+
