@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :shops
   resources :users
   resources :songs
-  resources :albums, only: [:new, :create]
+  resources :albums, except: [:show, :delete]
   # /articles/:id/change_status
   post "/articles/:id/change_status" => "articles#change_status", :as => :articles_change_status
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

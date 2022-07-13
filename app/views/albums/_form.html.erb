@@ -2,7 +2,7 @@
   <div>
     <%= form.label :name %><br>
     <%= form.text_field :name %>
-    <% album.errors.full_messages_for(:album).each do |message| %>
+    <% album.errors.full_messages_for(:name).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
@@ -17,11 +17,19 @@
 
    
   <div>
-    <%= form.label :band %><br>
-    <%= form.text_field :band %>
+    <%= form.label :author %><br>
+    <%= form.text_field :author %>
   </div>
 
   <br>
+  <div>
+    <%= form.label :cover %><br>
+    <%= form.file_field :cover %>
+    <% album.errors.full_messages_for(:cover).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
 
   <div>
     <%= form.submit %>
