@@ -13,24 +13,14 @@
     <% song.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
-  </div>
-
+  </div>  
   <div>
-    <%= form.label :author %><br>
-    <%= form.text_field :author %><br>
-    <% song.errors.full_messages_for(:author).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
-
-<div>
     <%= form.label :album %><br>
     <%= form.select :album_id, options_for_select(Album.all.map{|a|[a.name, a.id]}) %>
     <% song.errors.full_messages_for(:album).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
-
 
   <div>
     <%= form.submit %>

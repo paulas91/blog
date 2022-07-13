@@ -1,6 +1,12 @@
-<h1><%= @song.title %> </h1>
-<p><%= @song.body %></p>
-<p><%= @song.author %></p>
+<h1>Title: <%= @song.title %> </h1>
+<p> Body: <%= @song.body %></p>
+<p> Album name: <%= link_to @song.album.name, edit_album_path(@song.album) %>
+<p> The year of publishment: <%= @song.album.year %>
+<p> Author: <%= @song.album.author %>
+<% if @song.album.cover.attached? %>
+  <%=image_tag url_for(@song.album.cover) %>
+<%end%> 
+
 <p><%= link_to "edit", edit_song_path(@song) %></p>
 <p><%= link_to "delete", song_path(@song), data: { turbo_method: :delete, turbo_confirm: "Are you sure?"} %></p>
 

@@ -1,4 +1,4 @@
 class Song < ApplicationRecord
-  validates :title, :body, :author, presence: true 
+  validates :title, :body, presence: true 
   belongs_to :album
 end
