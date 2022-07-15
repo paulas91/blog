@@ -1,0 +1,11 @@
+<h1><%= @artist.name %></h1>
+<p><%= @artist.body %></h1>
+<p><%= @artist.music_style %>
+<p><%= link_to "edit", edit_artist_path(@artist) %></p>
+<p><%= link_to "delete", artist_path(@artist), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+
+} %></p>
+
+
