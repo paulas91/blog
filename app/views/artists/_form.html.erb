@@ -1,0 +1,41 @@
+<%= form_with model: artist do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% artist.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %><br>
+    <% artist.errors.full_messages_for(:body).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+   
+  <div>
+    <%= form.label :music_style %><br>
+    <%= form.select :music_style, ["pop", "rock", "disco", "rap", "techno", "sung poetry", "children_style"] %><br>
+    <% artist.errors.full_messages_for(:music_style).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :cover %><br>
+    <%= form.file_field :cover %>
+    <% artist.errors.full_messages_for(:cover).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+  
+  <div>
+    <%= form.submit %>
+  </div>
+  
+<% end %>

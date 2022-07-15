@@ -7,5 +7,8 @@
                       turbo_confirm: "Are you sure?"
 
 } %></p>
+<% if @artist.cover.attached? %>
+  <%=image_tag url_for(@artist.cover) %>
+<%end%>
 
 
