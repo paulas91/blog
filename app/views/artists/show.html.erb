@@ -8,7 +8,7 @@
 
 } %></p>
 <% if @artist.cover.attached? %>
-  <%=image_tag url_for(@artist.cover) %>
+  <%=image_tag @artist.cover.variant(:medium) %>
 <%end%>
 
 

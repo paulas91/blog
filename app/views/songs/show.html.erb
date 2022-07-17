@@ -1,10 +1,10 @@
 <h1>Title: <%= @song.title %> </h1>
 <p> Body: <%= @song.body %></p>
-<p> Album name: <%= link_to @song.album.name, edit_album_path(@song.album) %>
-<p> The year of publishment: <%= @song.album.year %>
-<p> Author: <%= @song.album.author %>
-<% if @song.album.cover.attached? %>
-  <%=image_tag url_for(@song.album.cover) %>
+<p> Album name: <%= link_to @album.name, edit_album_path(@album) %>
+<p> The year of publishment: <%= @album.year %>
+<p> Author: <%= @album.author %>
+<% if @album.cover.attached? %>
+  <%=image_tag url_for(@album.cover) %>
 <%end%> 
 
 <p><%= link_to "edit", edit_song_path(@song) %></p>
