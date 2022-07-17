@@ -4,9 +4,9 @@ class Artist < ApplicationRecord
     attachable.variant :medium, resize: "300x300"
   end 
 
-  has_many :songs
+  has_many :albums
+  has_many :songs, through: :albums
+  
   validates :name, :body, :music_style, presence: true
   validates :name, uniqueness: true
-
-
 end

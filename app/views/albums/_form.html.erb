@@ -21,7 +21,14 @@
     <%= form.text_field :author %>
   </div>
 
-  <br>
+  <div>
+    <%= form.label :artist_id %><br>
+    <%= form.select :artist_id, options_for_select(Artist.all.map{|a|[a.name, a.id]}) %>
+    <% album.errors.full_messages_for(:artist_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
   <div>
     <%= form.label :cover %><br>
     <%= form.file_field :cover %>

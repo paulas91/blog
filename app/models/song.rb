@@ -1,5 +1,5 @@
 class Song < ApplicationRecord
   validates :title, :body, presence: true 
   belongs_to :album
-  belongs_to :artist
+  has_one :artist, through: :album
 end

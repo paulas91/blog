@@ -1,6 +1,7 @@
 <h1><%= @artist.name %></h1>
-<p><%= @artist.body %></h1>
-<p><%= @artist.music_style %>
+<p><%= @artist.body %></p>
+<p><%= @artist.music_style %></p>
+<p><%= @artist.email %></p>
 <p><%= link_to "edit", edit_artist_path(@artist) %></p>
 <p><%= link_to "delete", artist_path(@artist), data: {
                       turbo_method: :delete,
@@ -8,7 +9,7 @@
 
 } %></p>
 <% if @artist.cover.attached? %>
-  <%=image_tag @artist.cover.variant(:medium) %>
+<%=link_to image_tag(@artist.cover.variant(:medium)), @artist.cover, target: "_blank" %>
 <%end%>
 
 
