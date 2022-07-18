@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_17_104209) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_18_113806) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -76,6 +76,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_17_104209) do
     t.index ["article_id"], name: "index_comments_on_article_id"
   end
 
+  create_table "measurement_values", force: :cascade do |t|
+    t.integer "measurement_id", null: false
+    t.float "value"
+    t.time "measurement_time", precision: 6
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["measurement_id"], name: "index_measurement_values_on_measurement_id"
+  end
+
+  create_table "measurements", force: :cascade do |t|
+    t.integer "upload_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "upload_id"], name: "index_measurements_on_name_and_upload_id", unique: true
+    t.index ["upload_id"], name: "index_measurements_on_upload_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.string "domain"
@@ -96,6 +114,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_17_104209) do
     t.index ["album_id"], name: "index_songs_on_album_id"
   end
 
+  create_table "uploads", force: :cascade do |t|
+    t.string "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -110,5 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_17_104209) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "artists"
   add_foreign_key "comments", "articles"
+  add_foreign_key "measurement_values", "measurements"
+  add_foreign_key "measurements", "uploads"
   add_foreign_key "songs", "albums"
 end

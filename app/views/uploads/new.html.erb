@@ -1,0 +1,16 @@
+<h1>New Upload</h1>
+<%= form_with model: @upload do |form| %>
+ <div>
+    <%= form.label :file %><br>
+    <%= form.file_field :file %>
+    <% @upload.errors.full_messages_for(:file).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <br>
+  
+  <div>
+    <%= form.submit %>
+  </div>
+<%end%>
