@@ -1,16 +1,60 @@
 <h1>Shops</h1>
-<%= form_for(:filter, { url: shops_path, method: :get }) do |f| %>
-  <%= fields_for :filter do |filter| %>
-    <%= filter.number_field :workers_number, value: @number %>
-  <% end %>
-  <%= f.submit %>
-<% end %>
+<div class="row">
+  <div class='col-5'>
+    <%= form_for(:filter, { url: shops_path, method: :get }) do |f| %>
+      <%= fields_for :filter do |filter| %>
+        <%= filter.label :workers_number, class: 'form-label' %>
+        <%= filter.number_field :workers_number, value: @number, class: 'form-control' %>
+      <% end %>
+    <%= f.label :order_by, class: 'form-label' %>
+    <%= f.select :order_by, options_for_select([:name, :domain, :description, :adress], selected: @order_by), {}, {class: 'form-control'} %>
+    <%= f.label :sort_direction, class: 'form-label' %>
+    <div class="form-check form-check-inline"">
+      <%= f.label :sort_direction, "ascending", value: "asc"  %>
+      <%= f.radio_button :sort_direction, "asc", {checked: @sort_direction == "asc", class: "form-check-input"} %>
+    </div>
+    <div class="form-check form-check-inline"">
+      <%= f.label :sort_direction, "descending", value: "desc" %>
+      <%= f.radio_button :sort_direction, "desc", {checked: @sort_direction == "desc", class: "form-check-input"} %>
+    </div>
+    <%= f.submit "choose", class: "btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
+  
 <p><%= link_to "Add new shop", new_shop_path %></p>
-<ul>
-  <% @shops.each do |shop| %>
-    <li>
-      <%= link_to shop.name, shop_path(shop) %>
-    </li>  
-  <%end%>
-</ul>
+<style> td, th { border: 1px solid black; } </style>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Domain</th>
+      <th>Adress</th>
+      <th>Phone</th>
+      <th>Workers number</th>
+      <th>Edit</th>
+      <th>Delete</th>  
+    </tr>
+  </thead>
+  <tbody>
+    <% @shops.each do |shop| %>
+      <tr>
+        <td><%= shop.name %></td>
+        <td><%= shop.description %></td>
+        <td><%= link_to shop.domain, shop.url, target: "_blank" %></td>
+        <td><%= shop.adress %></td>
+        <td><%= shop.phone %></td>
+        <td><%= shop.workers_number %>
+        <td> <%= link_to "Edit", edit_shop_path(shop) %></td>
+        <td> <%=link_to "Destroy", shop_path(shop), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %> </td>
+      </tr>
+    <%end %>
+  </tbody>
+</table>   
+
+
 

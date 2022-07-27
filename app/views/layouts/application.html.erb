@@ -20,7 +20,9 @@
       <%= link_to "Albums", albums_path %>
       <%= link_to "Artists", artists_path %>
       <%= link_to "Uploads", uploads_path %>
+    </div>
+    <div class="container-fluid">
+      <%= yield %>
     </div> 
-    <%= yield %>
   </body>
 </html>

@@ -1,0 +1,11 @@
+<div class="row">
+
+<h1>Measurements</h1>
+<ul>
+  <% @measurements.each do |measurement| %>
+    <li>
+        <%= link_to measurement.name, upload_measurement_path(@upload, measurement) %>    
+    </li>
+  <%end%>
+</ul>
+</div>

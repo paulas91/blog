@@ -1,21 +1,22 @@
 require 'csv'
 class Upload < ApplicationRecord
   has_one_attached :file
-  has_many :measurements
+  has_many :measurements, dependent: :destroy
+  has_many :measurement_values, through: :measurements
 
   # before_create do
   #   self.state = "new"
   # end - metoda na przypisanie wartosci do atrybutu , ta metoda to callback która ma wiele zastosowan
 
   def process_file
-    return if state == "processed"
+    return if state != "new"
 
     update(state: 'processing')    
     #wczytaj plik z aktiv storage, w pętli dla każdego rekordu zapisac mesurement i mesurement_value
     csv = CSV.parse(file.download, headers: true, col_sep: "\t") 
     # compact czysci nile w array
     
-    csv.headers.compact.each do |header|
+    measurements_array = csv.headers.compact.map do |header|
       measurements.find_or_create_by(name: header.encode)
     end
 
@@ -28,7 +29,7 @@ class Upload < ApplicationRecord
         row.each do |header, value|
           next if header.nil? || value.nil?
         
-          measurement = measurements.where(name: header.encode).first
+          measurement = measurements_array.find { |m| m.name == header.encode }
           # MeasurementValue.create(value: value.to_f, measurement_time: time, measurement_id: measurement.id)
           measurement.measurement_values.create(value: value.to_f, measurement_time: time)
         end

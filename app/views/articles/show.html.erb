@@ -3,9 +3,9 @@
 
 <p><%= @article.body %></p>
 
-<%= link_to "archived" ,articles_change_status_path(@article, status: "archived"), data: { turbo_method: "post" }  %>
-<%= link_to "public", articles_change_status_path(@article, status: "public"), data: { turbo_method: "post" } %>
-<%= link_to "private", articles_change_status_path(@article, status: "private"),  data: { turbo_method: "post" } %>
+<%= link_to "archived", change_status_article_path(@article, status: "archived"), data: { turbo_method: "post" }  %>
+<%= link_to "public", change_status_article_path(@article, status: "public"), data: { turbo_method: "post" } %>
+<%= link_to "private", change_status_article_path(@article, status: "private"),  data: { turbo_method: "post" } %>
 <p><%= link_to "edit", edit_article_path(@article) %></p>
 <p><%= link_to "delete", article_path(@article), data: {
                     turbo_method: :delete,

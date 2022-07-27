@@ -1,19 +1,16 @@
 class ShopsController < ApplicationController
   def index
+    @order_by = params.dig(:filter, :order_by) || :name
+    @sort_direction = params.dig(:filter, :sort_direction) || "asc"
+    @shops = Shop.order(@order_by => @sort_direction)
     @number = params.dig(:filter, :workers_number)&.to_i
-    # @ushops = if params[:filter] && params[:filter][:workers_number] 
-    @shops = if @number
-      Shop.where("workers_number >= #{@number}")
+    # @shops = if params[:filter] && params[:filter][:workers_number] 
+    if @number
+      @shops = @shops.where("workers_number >= #{@number}")
       # User.where("workers_number >= )
-    else
-        Shop.all
-      end
+    end
   end
     
-  def show
-    @shop = Shop.find(params[:id])
-  end
-
   def new
     @shop = Shop.new
   end
@@ -34,7 +31,7 @@ class ShopsController < ApplicationController
   def update
     @shop = Shop.find(params[:id])
     if @shop.update(shop_params)
-      redirect_to @shop
+      redirect_to shops_path
     else 
       render :edit, status: :unprocessable_entity
     end

@@ -1,3 +1,34 @@
 <h1>Uploads</h1>
 <p><%= link_to "Add new upload", new_upload_path %></p>
+<style> td, th { border: 1px solid black; } </style>
+<table>
+  <thead>
+    <tr>
+      <th>File name</th>
+      <th>Creation date</th>
+      <th>Number of measurments</th>
+      <th>Number of measurement_values</th>
+      <th>State</th>
+      <th>Actions</th>  
+    </tr>
+  </thead>
+  <tbody>
+    <% @uploads.each do |upload| %>
+      <tr>
+        <td><%=link_to upload.file.filename.to_s, rails_blob_path(upload.file, disposition: "attachment") %></td>
+        <td><%= upload.file.created_at %></td>
+        <td><%= upload.measurements.count %></td>
+        <td><%= upload.measurement_values.count %></td>
+        <td><%= upload.state %></td>
+        <td>
+          <%= link_to("process file", process_file_upload_path(upload), data: { turbo_method: "post" }, class: 'btn btn-danger btn-sm') if upload.state == "new" %>
+          <%= link_to "Measurements", upload_measurements_path(upload), class: 'btn btn-primary btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>   
 
+
+
+ 

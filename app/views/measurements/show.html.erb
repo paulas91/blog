@@ -1,0 +1,66 @@
+
+<h1><%= @measurement.name %></h1>
+<div class="row">
+  <div class="col-5">
+    <%= form_for("", { url: upload_measurement_path(@upload, @measurement), method: :get }) do |f| %>
+      <%= f.select :additional_measurement_id, options_for_select(@additional_measurements_list, selected: params[:additional_measurement_id]),  {}, {class: ' form-select-lg mb-3'}   %>
+      <%= f.submit "Add", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+    <%= line_chart(@data) %>
+    </div>
+</div>
+<div class="row justify-content-center">
+  <div class="col-4">
+  </div>
+  <div class="col-4 text-center">
+    <%= paginate @measurement_values %>
+  </div>
+  <div class="col-4">
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <table  class="table table-striped">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @measurement_values.each do |measurement_value| %>
+          <tr>
+            <td><%= measurement_value.measurement_time %></td>
+            <td><%= measurement_value.value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+   <div class="col-6">
+   <% if params[:additional_measurement_id].present? %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Additional Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @additional_measurement_values.each do |additional_measurement_value| %>
+          <tr>
+            <td><%= additional_measurement_value.measurement_time %></td>
+            <td><%= additional_measurement_value.value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+   <%end%> 
+ 
+</div>

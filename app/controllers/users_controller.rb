@@ -1,17 +1,15 @@
 class UsersController < ApplicationController 
   def index
+    @order_by = params.dig(:filter, :order_by) || :first_name
+    @sort_direction = params.dig(:filter, :sort_direction) || "asc"
+    @users = User.order(@order_by => @sort_direction)
+    # @users = User.order(params[:])
     @year = params.dig(:filter, :year)&.to_i
     # @users = if params[:filter] && params[:filter][:year] 
-    @users = if @year
-      User.where("birthday >= '#{@year}-01-01'")
+    if @year
+      @users = @users.where("birthday >= '#{@year}-01-01'")
       # User.where("birthday >= '#{params[:filter][:year]}-01-01'")
-    else
-      User.all
     end
-  end
-
-  def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -35,7 +33,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.update(user_params)
-      redirect_to @user
+      redirect_to users_path
     else
       render :edit, status: :unprocessable_entity
     end
