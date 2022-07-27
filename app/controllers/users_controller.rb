@@ -6,10 +6,10 @@ class UsersController < ApplicationController
     # @users = User.order(params[:])
     @year = params.dig(:filter, :year)&.to_i
     # @users = if params[:filter] && params[:filter][:year] 
-    if @year
-      @users = @users.where("birthday >= '#{@year}-01-01'")
+    @users = @users.born_after(@year) if @year
       # User.where("birthday >= '#{params[:filter][:year]}-01-01'")
-    end
+    @query = params.dig(:search, :query)
+    @users = @users.search(@query) if @query.present?
   end
 
   def new
