@@ -1,6 +1,9 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.all
+    @q = Artist.ransack(params[:q])
+    @artists = @q.result(distinct: true)
+
+    # @artists = Artist.all
   end
 
   def show

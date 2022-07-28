@@ -1,6 +1,27 @@
 <h1>Artists</h1>
 <p><%= link_to "Add New Artist", new_artist_path %></p>
 
+<div class="row">
+  <div class="col-5">
+    <%= search_form_for @q do |f| %>
+    <div class="col-5">
+      <%= f.label :name_cont %>
+      <%= f.search_field :name_cont %>
+      </div>
+      <div class="col-5">
+      <%= f.label :music_style %>
+      <%= f.search_field :music_style %>
+      </div>
+      <div class="col-5">
+      <%= f.label :name_or_music_style_cont %>
+      <%= f.search_field :name_or_music_style_cont %>
+      </div>
+      <%= f.submit "search" %>
+    <% end %>
+  </div>  
+</div>    
+ <br>   
+
 <ul>
   <% @artists.each do |artist| %>
     <li>
@@ -13,4 +34,5 @@
     </li>
   <%end%>
 </ul>
+
 

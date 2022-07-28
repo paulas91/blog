@@ -8,7 +8,7 @@ class ShopsController < ApplicationController
     @shops = @shops.workers_number(@number) if @number
       # User.where("workers_number >=
     @query = params.dig(:search, :query)
-    @shops = @shops.search(@query) if@query.present?
+    @shops = @shops.search(@query) if @query.present?
   end
 
 
