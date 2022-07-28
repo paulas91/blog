@@ -5,12 +5,13 @@ class ShopsController < ApplicationController
     @shops = Shop.order(@order_by => @sort_direction)
     @number = params.dig(:filter, :workers_number)&.to_i
     # @shops = if params[:filter] && params[:filter][:workers_number] 
-    if @number
-      @shops = @shops.where("workers_number >= #{@number}")
-      # User.where("workers_number >= )
-    end
+    @shops = @shops.workers_number(@number) if @number
+      # User.where("workers_number >=
+    @query = params.dig(:search, :query)
+    @shops = @shops.search(@query) if@query.present?
   end
-    
+
+
   def new
     @shop = Shop.new
   end
