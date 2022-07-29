@@ -2,6 +2,10 @@ class MeasurementsController < ApplicationController
   def index
     @upload = Upload.find(params[:upload_id])
     @measurements = @upload.measurements
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @measurements }
+    end
   end
 
   def show

@@ -9,6 +9,10 @@ class ShopsController < ApplicationController
       # User.where("workers_number >=
     @query = params.dig(:search, :query)
     @shops = @shops.search(@query) if @query.present?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @shops }
+    end
   end
 
 

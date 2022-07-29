@@ -10,6 +10,10 @@ class UsersController < ApplicationController
       # User.where("birthday >= '#{params[:filter][:year]}-01-01'")
     @query = params.dig(:search, :query)
     @users = @users.search(@query) if @query.present?
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+    end
   end
 
   def new

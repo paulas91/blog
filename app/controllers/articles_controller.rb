@@ -24,6 +24,10 @@ class ArticlesController < ApplicationController
     else
       @articles.status_public
     end
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @articles }
+    end
   end
 
   def show

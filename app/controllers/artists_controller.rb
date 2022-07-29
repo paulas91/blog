@@ -2,8 +2,11 @@ class ArtistsController < ApplicationController
   def index
     @q = Artist.ransack(params[:q])
     @artists = @q.result(distinct: true)
-
     # @artists = Artist.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @artists }
+    end
   end
 
   def show
