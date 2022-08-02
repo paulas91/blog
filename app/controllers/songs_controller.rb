@@ -1,4 +1,11 @@
 class SongsController < ApplicationController
+  # protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token, if: :json_request?
+
+  def json_request?
+    request.format.json?
+  end
+
   def index
     @songs = Song.all
     respond_to do |format|
@@ -9,14 +16,20 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    @album = @song.album
+    @album = @song.album    
+    respond_to do |format|
+      format.html  
+      format.json { render json: @song }
+    end
+
   end
 
   def new
     @song = Song.new
   end
 
-  def create
+  def create 
+  binding.pry
     @song = Song.new(song_params)
     if @song.save
       redirect_to @song

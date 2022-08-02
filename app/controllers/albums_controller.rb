@@ -3,10 +3,18 @@ class AlbumsController < ApplicationController
     @albums = Album.all
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @lbums }
-    end
-    
+      format.json { render json: @albums }
+    end 
   end
+
+  def show
+    @album = Album.find(params[:id])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @album }
+    end 
+  end
+
 
   def new
     @album = Album.new
