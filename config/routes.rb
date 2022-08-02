@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   resources :shops
   resources :users
   resources :songs
-  resources :albums, except: [:show, :delete]
+  resources :albums, except: [:delete]
   resources :artists
+  resources :fitnesses
   
   
   resources :uploads, except: [:delete, :edit, :update] do

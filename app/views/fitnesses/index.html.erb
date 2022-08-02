@@ -1,0 +1,31 @@
+<h1>Kalkulator BMI</h1>
+<%= form_for(:fitness, { url: fitnesses_path, method: :get }) do |f| %>
+  <div>
+    <%= f.label :płeć %><br>
+    <%= f.select :sex, ['kobieta', 'mężczyzna'] %>
+  </div>
+
+  <div>
+    <%= f.label :waga %><br>
+    <%= f.number_field(:weight, in: 1.0..200.0, step: 0.5) %><br>
+  </div>
+  <div>
+    <%= f.label :wzrost %><br>
+    <%= f.number_field(:growth, in: 0.0..200.0, step: 0.01) %><br>
+  </div>
+  <div>
+    <%= f.submit "Oblicz" %>
+  </div>
+  
+<% end %>
+<br>
+<br>
+
+
+
+Twoje BMI wynosi :<%= @wynik %>
+ <br><%= @result %>
+
+
+
+

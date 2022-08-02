@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_18_113806) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_31_102147) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -74,6 +74,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_113806) do
     t.datetime "updated_at", null: false
     t.string "status"
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "fitnesses", force: :cascade do |t|
+    t.text "sex"
+    t.string "weight"
+    t.string "growth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "measurement_values", force: :cascade do |t|
