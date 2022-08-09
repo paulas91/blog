@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users
   
-  root "articles#index"
+  root "users#index"
   resources :articles do
     resources :comments, only: [:create]
     post 'change_status', on: :member
