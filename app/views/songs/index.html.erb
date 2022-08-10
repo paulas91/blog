@@ -4,12 +4,13 @@
   <% @songs.each do |song| %>
     <li>
       <%= link_to song_path(song) do %>
-      <%= image_tag(song.album.cover.variant(:thumb))%>
+      <% if song.album.cover.attached? %>
+        <%= image_tag(song.album.cover.variant(:thumb))%>
+      <% end %>  
       <%= song.title %>
       <% end %>
     </li>
   <% end %>
 </ul> 
 <p><%= link_to "Add New Albums", new_album_path %></p> 
-
 
