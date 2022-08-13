@@ -7,7 +7,9 @@ class SongsController < ApplicationController
   end
 
   def index
+    
     @songs = Song.all
+    flash.now[:notice] = "We have exactly #{@songs.size} songs available."
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @songs }

@@ -1,12 +1,14 @@
 class ArticlesController < ApplicationController
   skip_before_action :authenticate_user!, :only => [:index, :show]
+  before_action :find_article, :except => [:index, :create, :new]
+  before_action :check_author, :only => [:edit, :update, :destroy, :change_status]
 
   def index
     # TODO:
     # @article = ArticleFilter.new(params).perform
     # ##############
     @datetime = params.dig(:filter, :created_at)
-      # @users = if params[:filter] && params[:filter][:year] 
+      # @users = if params[:filter] && params[:filt @article = Article.new(article_params)er][:year] 
     @articles = if @datetime
       Article.where("created_at >= '#{@datetime}'")
         # User.where("birthday >= '#{params[:filter][:year]}-01-01'")
@@ -33,7 +35,6 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    @article = Article.find(params[:id])
     @comment = @article.comments.build
   end
 
@@ -43,19 +44,20 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
+    @article.user = current_user
     if @article.save
+      flash[:notice] = "New article has been created"
       redirect_to article_path(@article)
     else 
+      @article.alert.full_messages
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    @article = Article.find(params[:id])
   end
 
   def update
-    @article = Article.find(params[:id])
     if @article.update(article_params)
       redirect_to @article
     else 
@@ -64,14 +66,12 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
 
     redirect_to article_path, status: :see_other
   end
 
   def change_status
-    @article = Article.find(params[:id])
     if @article.update(status: params[:status])
       redirect_to @article
     else 
@@ -79,7 +79,24 @@ class ArticlesController < ApplicationController
     end
   end
 
+  
   private
+
+  def full_messages
+    ["It is not possible"]
+  end
+
+    
+
+  def check_author
+    unless @article.user == current_user
+      redirect_back(fallback_location: article_path)
+    end
+  end
+  
+  def find_article
+    @article = Article.find(params[:id])
+  end
 
   def article_params
     params.require(:article).permit(:title, :body, :status)

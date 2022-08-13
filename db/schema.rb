@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_08_212920) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_11_200924) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_212920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
   create_table "artists", force: :cascade do |t|
@@ -147,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_08_212920) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "albums", "artists"
+  add_foreign_key "articles", "users"
   add_foreign_key "comments", "articles"
   add_foreign_key "measurement_values", "measurements"
   add_foreign_key "measurements", "uploads"
