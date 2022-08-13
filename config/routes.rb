@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
+  get "/about_me", to: "static_sites#about_me"
+
+  
   
   root "users#index"
   resources :articles do

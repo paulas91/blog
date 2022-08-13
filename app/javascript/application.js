@@ -4,3 +4,7 @@ import "controllers"
 import "chartkick"
 import "Chart.bundle"
 import 'bootstrap'
+
+setTimeout(function() {
+  document.querySelectorAll("p.alert")[0].style.display = "none";
+}, 5000); //
