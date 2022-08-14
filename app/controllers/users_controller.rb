@@ -23,8 +23,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user
+      flash[:notice] = "User successfly created"
+      @user.send_reset_password_instructions
+      redirect_to  users_path
     else
+      flash[:notice] = @user.errors.full_messages
       render :new, status: :unprocessable_entity 
     end
   end

@@ -4,14 +4,16 @@
 <p><%= @article.body %></p>
 author : <%= @article.user.first_name %>
 
-<p><%= link_to "archived", change_status_article_path(@article, status: "archived"), data: { turbo_method: "post" }  %></p>
-<%= link_to "public", change_status_article_path(@article, status: "public"), data: { turbo_method: "post" } %>
-<%= link_to "private", change_status_article_path(@article, status: "private"),  data: { turbo_method: "post" } %>
-<p><%= link_to "edit", edit_article_path(@article) %></p>
-<p><%= link_to "delete", article_path(@article), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  }   %></p>
+<% if(@article.user == current_user) %>
+  <p><%= link_to "archived", change_status_article_path(@article, status: "archived"), data: { turbo_method: "post" }  %></p>
+  <%= link_to "public", change_status_article_path(@article, status: "public"), data: { turbo_method: "post" } %>
+  <%= link_to "private", change_status_article_path(@article, status: "private"),  data: { turbo_method: "post" } %>
+  <p><%= link_to "edit", edit_article_path(@article) %></p>
+  <p><%= link_to "delete", article_path(@article), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    }   %></p>
+<% end %>
 <small><%= @article.created_at %></small>
 
 <h2>Comments</h2>
