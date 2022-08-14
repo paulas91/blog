@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  skip_before_action :authenticate_user!, :only => [:index, :show]
+  skip_before_action :authenticate_devise_user!, :only => [:index, :show]
   before_action :find_article, :except => [:index, :create, :new]
   before_action :check_author, :only => [:edit, :update, :destroy, :change_status]
 

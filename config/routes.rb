@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  namespace :devise do
+    devise_for :users
+  end
+  
   get "/about_me", to: "static_sites#about_me"
 
   
