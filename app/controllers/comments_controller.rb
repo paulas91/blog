@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.new(comment_params)
-    @comment.commenter = current_user.full_name
+    @comment.commenter = current_devise_user.full_name
     @comment.status = @article.status
     if @comment.save
       redirect_to article_path(@article)

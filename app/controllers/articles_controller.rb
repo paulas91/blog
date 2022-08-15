@@ -21,7 +21,12 @@ class ArticlesController < ApplicationController
       if @status == "archived"
         @articles.status_archived
       elsif @status == "private"
-        @articles.status_private
+        if current_devise_user
+          @articles.status_private.for_user(current_device_user)#where(user_id: current_devise_user.id)
+        else
+          flash[:notice] = "No acces to private article"
+          redirect_to articles_path
+        end 
       else
         @articles.status_public
       end
@@ -44,12 +49,12 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(article_params)
-    @article.user = current_user
+    @article.user = current_devise_user
     if @article.save
       flash[:notice] = "New article has been created"
       redirect_to article_path(@article)
     else 
-      @article.alert.full_messages
+      flash[:alert] = @article.errors.full_messages.join(", ")
       render :new, status: :unprocessable_entity
     end
   end
@@ -73,6 +78,7 @@ class ArticlesController < ApplicationController
 
   def change_status
     if @article.update(status: params[:status])
+      flash[:notice] = "Status changed to #{params[:status]}"
       redirect_to @article
     else 
       render :edit, status: :unprocessable_entity
@@ -89,7 +95,7 @@ class ArticlesController < ApplicationController
     
 
   def check_author
-    unless @article.user == current_user
+    unless @article.user == current_devise_user
       redirect_back(fallback_location: article_path)
     end
   end

@@ -10,6 +10,7 @@ class Article < ApplicationRecord
   scope :status_archived, -> { where(status: 'archived') }
   scope :status_public, -> { where(status: 'public') }
   scope :status_private, -> { where(status: 'private')}
+  scope :for_user, ->(user) {where(user_id: user.id)}
    
   def archived?
     status == 'archived'
@@ -18,6 +19,5 @@ class Article < ApplicationRecord
   def public?
     status == 'public'
   end
-
-
+  
 end

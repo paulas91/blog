@@ -4,7 +4,7 @@
 <p><%= @article.body %></p>
 author : <%= @article.user.first_name %>
 
-<% if(@article.user == current_user) %>
+<% if(@article.user == current_devise_user) %>
   <p><%= link_to "archived", change_status_article_path(@article, status: "archived"), data: { turbo_method: "post" }  %></p>
   <%= link_to "public", change_status_article_path(@article, status: "public"), data: { turbo_method: "post" } %>
   <%= link_to "private", change_status_article_path(@article, status: "private"),  data: { turbo_method: "post" } %>
