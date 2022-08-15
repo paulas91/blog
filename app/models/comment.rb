@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  include Activitable
   belongs_to :article
   belongs_to :user
 
@@ -18,7 +19,7 @@ class Comment < ApplicationRecord
   end
 
   private
-  
+
   def created_commenter
     self.commenter = user.full_name
   end

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :albums, except: [:delete]
   resources :artists
   resources :fitnesses
+  resources :activity, only: [:index]
   
   
   resources :uploads, except: [:delete, :edit, :update] do
