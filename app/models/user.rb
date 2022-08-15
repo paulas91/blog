@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :articles
+  has_many :comments
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -10,7 +11,8 @@ class User < ApplicationRecord
   scope :search, ->(query) { where("LOWER(first_name) LIKE LOWER(?)", sanitize_sql_like(query) + "%").or(
         where("LOWER(last_name) LIKE LOWER(?)", sanitize_sql_like(query) + "%")
       ) }
-  def full_name
+ 
+      def full_name
     "#{first_name} #{last_name}"
   end
 
