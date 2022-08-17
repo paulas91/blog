@@ -1,0 +1,21 @@
+<h1>Activity</h1>
+
+<ul>
+  <% @activities.each do |activity| %>
+    <li>
+      <%= activity.user.full_name %>
+      created new <%= activity.activitable_type.downcase %>
+        <% if activity.activitable_type == "Comment"%>
+          <%=render partial: "#{activity.activitable_type.downcase.pluralize}/activity", locals: { activity: activity } %>
+          <%
+=begin%>
+ <%= link_to activity.activitable.part_of_com, article_path(activity.activitable.article) %> 
+<%
+=end%>
+        <% else %>
+          <%=render partial: "#{activity.activitable_type.downcase.pluralize}/activity", locals: {activity: activity } %>
+        <% end %>
+      <hr>
+    </li>  
+  <%end%>
+</ul>

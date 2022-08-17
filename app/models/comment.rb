@@ -18,6 +18,10 @@ class Comment < ApplicationRecord
     status == 'public'
   end
 
+  def part_of_com
+    "#{body.truncate(20)} (#{article.part_of_title})"
+  end
+
   private
 
   def created_commenter

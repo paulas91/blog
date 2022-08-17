@@ -20,5 +20,9 @@ class Article < ApplicationRecord
   def public?
     status == 'public'
   end
+
+  def part_of_title
+    title.truncate(15)
+  end
   
 end
