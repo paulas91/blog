@@ -1,4 +1,5 @@
 class ShopsController < ApplicationController
+  include ActivityConcern
   def index
     @order_by = params.dig(:filter, :order_by) || :name
     @sort_direction = params.dig(:filter, :sort_direction) || "asc"
@@ -23,6 +24,7 @@ class ShopsController < ApplicationController
   def create
     @shop = Shop.new(shop_params)
     if @shop.save
+      create_activitable(@shop)
       redirect_to @shop
     else 
       render :new, status: :unprocessable_entity
