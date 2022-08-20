@@ -1,8 +1,8 @@
 class ActivityController < ApplicationController
   def index
-    @datetime = params.dig(:filter, :created_at)
-    @activities = if @datetime
-      Activity.where("created_at >= '#{@datetime}'")
+    @activity_type = params.dig(:filter, :activitable_type)
+    @activities = if @activity_type.present?
+      Activity.where("activitable_type = '#{@activity_type}'")
     else
       Activity.all
     end

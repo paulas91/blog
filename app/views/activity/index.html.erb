@@ -1,4 +1,8 @@
-<h1>Activity</h1>
+<%= form_for(:filter, { url: activity_index_path, method: :get }) do |f| %>
+  <%= f.select :activitable_type, options_for_select(Activity.activitable_types, selected: @activity_type), include_blank: true %>
+  <%= f.submit %>
+<% end %>  
+
 <ul>
   <% @activities.each do |activity| %>
     <li>
@@ -7,5 +11,6 @@
       <%=render partial: "#{activity.activitable_type.downcase.pluralize}/activity", locals: { activity: activity } %>
       <hr>
     </li>  
-  <%end%>
-</ul
+  <% end %>
+    
+</ul 

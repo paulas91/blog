@@ -1,6 +1,7 @@
 class Album < ApplicationRecord
   belongs_to :artist
   has_many :songs
+  has_many :activities,  as: :activitable
   has_one_attached :cover do |attachable|
     attachable.variant :thumb, resize: "100x100"
     attachable.variant :medium, resize: "300x300"
