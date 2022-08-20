@@ -1,6 +1,7 @@
 class AlbumsController < ApplicationController
+  include ActivityConcern
   def index
-    @albums = Album.all
+    @albums = Album.all.includes(:songs)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @albums }
@@ -23,6 +24,7 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     if @album.save
+      create_activitable(@album)
       redirect_to songs_path
     else
       render :new, status: :unprocessable_entity  

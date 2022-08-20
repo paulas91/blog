@@ -7,14 +7,13 @@ class SongsController < ApplicationController
   end
 
   def index
-    
-    @songs = Song.all
+    @songs = Song.all.includes(album: {cover_attachment: :blob}) #{cover: { costam: :costamjeszcze })
     flash.now[:notice] = "We have exactly #{@songs.size} songs available."
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @songs }
     end
-  end
+  end 
 
   def show
     @song = Song.find(params[:id])
@@ -31,7 +30,6 @@ class SongsController < ApplicationController
   end
 
   def create 
-  binding.pry
     @song = Song.new(song_params)
     if @song.save
       redirect_to @song
