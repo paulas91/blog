@@ -1,14 +1,22 @@
 <h1>Songs</h1>
 <p><%= link_to "Add new song", new_song_path %></p>
-<ul>
+<ul class="list-group">
   <% @songs.each do |song| %>
-    <li>
-      <%= link_to song_path(song) do %>
-      <% if song.album.cover.attached? %>
-        <%= image_tag(song.album.cover.variant(:thumb))%>
-      <% end %>  
-      <%= song.title %>
-      <% end %>
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-1">
+          <%= link_to song_path(song) do %>
+            <%= album_cover(song.album) %>
+          <% end %>
+        </div>
+        <div class="col">  
+          <%= link_to song_path(song) do %>
+            <%= song.title %>
+            -
+            <%= song.album.name %>
+          <% end %>
+        </div>
+      </div>
     </li>
   <% end %>
 </ul> 

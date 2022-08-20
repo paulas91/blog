@@ -1,14 +1,24 @@
 <h1>Albums</h1>
 <p><%= link_to "Add new album", new_album_path %></p>
-<ul>
+<ul class="list-group">
   <% @albums.each do |album| %>
-    <li>
-      <%= link_to album.name, edit_album_path(album) %>
-      <hr>
+    <li class="list-group-item">
+    <div class="row">
+    <div class="col-1">
+      <%= album_cover(album) %>
+    </div>
+    <div class="col">  
+      <%= link_to album.name, edit_album_path(album) %>      
+      <ul>
+        <% album.songs.each do |song|%>
+          <li> <%= song.title %></li>
+        <% end %>
+      </ul>  
+    </div>
+    </div>
     </li>
   <% end %>
 </ul> 
-
 
 
 
