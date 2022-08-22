@@ -7,7 +7,7 @@
   <% @activities.each do |activity| %>
     <li>
       <%= activity.user.full_name %>
-      created new <%= activity.activitable_type.downcase %>
+      <%= activity.action_text %> <%= activity.activitable_type.downcase %>
       <%=render partial: "#{activity.activitable_type.downcase.pluralize}/activity", locals: { activity: activity } %>
       <hr>
     </li>  

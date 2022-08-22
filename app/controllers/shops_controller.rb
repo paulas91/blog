@@ -38,6 +38,7 @@ class ShopsController < ApplicationController
   def update
     @shop = Shop.find(params[:id])
     if @shop.update(shop_params)
+      create_activitable(@shop, Activity.actions[:activitable_update] )
       redirect_to shops_path
     else 
       render :edit, status: :unprocessable_entity
@@ -45,9 +46,11 @@ class ShopsController < ApplicationController
   end
 
   def destroy
-    @article = Shop.find(params[:id])
-    @article.destroy
-
+    @shop = Shop.find(params[:id])
+    ActiveRecord::Base.transaction do
+      create_activitable(@shop, Activity.actions[:activitable_destroy] )
+      @shop.destroy
+    end
     redirect_to shop_path, status: :see_other
   end
 

@@ -1,1 +1,5 @@
-<%= link_to activity.activitable.title, song_path(activity.activitable) %>
+<% if activity.activitable.present? %>
+  <%= link_to activity.activitable.title, song_path(activity.activitable) %>
+<% else %>
+  (Item deleted)  
+<% end %>  

@@ -1,4 +1,5 @@
 class SongsController < ApplicationController
+  include ActivityConcern
   # protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token, if: :json_request?
 
@@ -32,6 +33,7 @@ class SongsController < ApplicationController
   def create 
     @song = Song.new(song_params)
     if @song.save
+      create_activitable(@song)
       redirect_to @song
     else
       render :new, status: :unprocessable_entity  
@@ -45,6 +47,7 @@ class SongsController < ApplicationController
   def update
     @song = Song.find(params[:id])
     if @song.update(song_params)
+      create_activitable(@song, Activity.actions[:activitable_update] )
       redirect_to @song
     else
       render :edit, status: :unprocessable_entity
@@ -53,8 +56,10 @@ class SongsController < ApplicationController
 
   def destroy
     @song = Song.find(params[:id])
-    @song.destroy
-
+    ActiveRecord::Base.transaction do
+      create_activitable(@song, Activity.actions[:activitable_destroy] )
+      @song.destroy
+    end
     redirect_to songs_path, status: :see_other
   end
 
