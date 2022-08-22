@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
         @articles.status_archived
       elsif @status == "private"
         if current_devise_user
-          @articles.status_private.for_user(current_device_user)#where(user_id: current_devise_user.id)
+          @articles.status_private.for_user(current_devise_user)#where(user_id: current_devise_user.id)
         else
           flash[:notice] = "No acces to private article"
           redirect_to articles_path
