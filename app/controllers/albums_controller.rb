@@ -24,7 +24,6 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     if @album.save
-      create_activitable(@album)
       redirect_to songs_path
     else
       render :new, status: :unprocessable_entity  
@@ -34,8 +33,6 @@ class AlbumsController < ApplicationController
   def update
     @album = Album.find(params[:id])
     if @album.update(album_params)
-      create_activitable(@album, Activity.actions[:activitable_update] )
-      
       redirect_to albums_path
     else 
       render :edit, status: :unprocessable_entity

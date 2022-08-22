@@ -1,6 +1,7 @@
 
 <% if activity.activitable.present? %>
-  <%= link_to activity.activitable.name, shop_path(activity.activitable) %>
+  "<%= activity.activitable.name %>"
+  <%= link_to "See all shops", shops_path %>
 <% else %>
   (Item deleted)  
 <% end %>  
