@@ -16,6 +16,15 @@ class ShopsController < ApplicationController
     end
   end
 
+  def show
+    @shop = Shop.find(params[:id])
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @shop }
+    end 
+  end
+
+
 
   def new
     @shop = Shop.new
@@ -54,7 +63,7 @@ class ShopsController < ApplicationController
   private
 
   def shop_params
-    params.require(:shop).permit(:name, :domain, :description, :adress, :phone, :workers_number )
+    params.require(:shop).permit(:name, :domain, :description, :adress, :phone, :workers_number, product_ids: [] )
   end
 
 end
