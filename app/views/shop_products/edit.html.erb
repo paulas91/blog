@@ -1,0 +1,20 @@
+<h4> <%=@shop_product.product.name %></h4>
+<%= form_with model: @shop_product, url: shop_shop_product_path(@shop, @shop_product) do |form| %>
+  <div>
+    <%= form.label :price %><br>
+    <%= form.number_field :price, step: 0.01 %>
+    <% @shop_product.errors.full_messages_for(:price).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :inventory_state %><br>
+    <%= form.number_field :inventory_state %><br>
+    <% @shop_product.errors.full_messages_for(:inventory_state).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

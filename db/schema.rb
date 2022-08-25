@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_15_205031) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_24_201831) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_205031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.integer "action", default: 0, null: false
     t.index ["activitable_type", "activitable_id"], name: "index_activities_on_activitable"
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
@@ -76,6 +77,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_205031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -114,6 +121,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_205031) do
     t.datetime "updated_at", null: false
     t.index ["name", "upload_id"], name: "index_measurements_on_name_and_upload_id", unique: true
     t.index ["upload_id"], name: "index_measurements_on_upload_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "category_id", null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+  end
+
+  create_table "shop_products", force: :cascade do |t|
+    t.decimal "price", precision: 7, scale: 2
+    t.integer "inventory_state"
+    t.integer "product_id"
+    t.integer "shop_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_shop_products_on_product_id"
+    t.index ["shop_id"], name: "index_shop_products_on_shop_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -167,5 +193,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_205031) do
   add_foreign_key "comments", "users"
   add_foreign_key "measurement_values", "measurements"
   add_foreign_key "measurements", "uploads"
+  add_foreign_key "products", "categories"
+  add_foreign_key "shop_products", "products"
+  add_foreign_key "shop_products", "shops"
   add_foreign_key "songs", "albums"
 end

@@ -47,6 +47,12 @@
     <% end %>
   </div>
 
+  <div>
+    <%= form.label :product_ids %><br>
+    <%= form.select :product_ids, options_for_select(Product.all.map{|a|[a.name, a.id]}, shop.product_ids), {prompt: '-Select-'}, {:multiple => true} %>
+  </div>
+  
+
 
 
   <div>

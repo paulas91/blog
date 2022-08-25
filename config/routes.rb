@@ -12,13 +12,16 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     post 'change_status', on: :member
   end
-  resources :shops
+  resources :shops do
+    resources :shop_products, only: [:update, :edit]
+  end
   resources :users
   resources :songs
   resources :albums, except: [:delete]
   resources :artists
   resources :fitnesses
   resources :activity, only: [:index]
+  resources :products
   
   
   resources :uploads, except: [:delete, :edit, :update] do

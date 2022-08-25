@@ -1,0 +1,18 @@
+
+  <h1><%= @shop.name %></h1>
+  <p><%= @shop.domain %></p>
+  <p><%= @shop.adress %></p>
+  <p><%= @shop.description %></p>
+  <% @shop.shop_products.each do |shop_product| %>
+    <div class="card" style="width: 18rem;">
+      <%= shop_product.product.name %><br>
+      <%= shop_product.product.category.name %><br>
+      ilość: <%= shop_product.inventory_state %><br>
+      cena: <%= shop_product.price %> zł
+      <%= link_to "edit", edit_shop_shop_product_path(@shop, shop_product) %>
+      <hr>
+    </div>
+    <% end %>
+    <br>
+  <p>tel: <%= @shop.phone %></p>
+  <%= link_to "Edit", edit_shop_path(@shop) %>
