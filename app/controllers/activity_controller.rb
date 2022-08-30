@@ -2,7 +2,7 @@ class ActivityController < ApplicationController
   
   def index
     @activity_type = params.dig(:filter, :activitable_type)
-    @activities = current_devise_user.activities.order(id: :desc)
+    @activities = current_devise_user.activities.order(id: :desc).page(params[:page])
     if @activity_type.present?
       @activities = @activities.where("activitable_type = '#{@activity_type}'")
     end

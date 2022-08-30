@@ -1,12 +1,30 @@
 
-<p><%= link_to "Add new product", new_product_path %></p>
 <ul>
+ <div class='row'>
   <% @products.each do |product| %>
+    <div class="card" style="width: 18rem;">
+      <%= product_image(product) %>
+     <div class="card-body">
     <li>
-      <%= product.name %>
-      <hr>
-    </li>  
-  <%end%>
+    
+      <h5 class="card-title"><%= link_to product.name, category_product_path(@category, product) %></h5>
+
+     <button type="button" class="btn btn-info btn-sm"><%= link_to "Destroy", category_product_path(@category, product), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %> </button>
+     <button type="button" class="btn btn-info btn-sm"><%= link_to "Edit", edit_category_product_path(@category, product) %></button>
+
+    
+    </li> 
+    </div>
+    </div> 
+  <% end %>
+  </div>
 </ul>
+
+
+  <%= link_to "Add new product", new_category_product_path(@category) %>
+ 
 
 

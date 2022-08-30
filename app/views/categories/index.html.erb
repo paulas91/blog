@@ -1,0 +1,47 @@
+
+<p><%= link_to "Add new category", new_category_path %></p>
+
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  Kategorie
+  </a>
+  <ul class="dropdown-menu">
+    <% @categories.each do |category| %>
+      <div class="row">
+      <div class="col-6">
+        <li><%= link_to category.name, category_products_path(category), class: "dropdown-item"  %></li>
+      </div>
+      <div class="col-3">
+        <li><%= link_to "Edit", edit_category_path(category), class: "dropdown-item"  %></li>
+      </div>
+      <div class="col-3">
+        <li><%= link_to "delete", category_path(category),data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+
+            }, class: "dropdown-item"  %></li>
+      </div>
+      </div>
+      <hr>
+    <% end %>
+  </ul>
+</div>
+
+<%
+=begin%>
+ 
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Dropdown link
+  </a>
+
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div>
+
+
+ 
+<%
+=end%>

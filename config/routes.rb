@@ -21,7 +21,11 @@ Rails.application.routes.draw do
   resources :artists
   resources :fitnesses
   resources :activity, only: [:index]
-  resources :products
+  resources :categories do
+    resources :products do
+      post "bulk_update", on: :member
+    end
+  end
   
   
   resources :uploads, except: [:delete, :edit, :update] do

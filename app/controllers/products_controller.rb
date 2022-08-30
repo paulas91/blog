@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    @category = Category.find(params[:category_id])
+    @products = @category.products
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @products }
@@ -8,6 +9,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @category = Category.find(params[:category_id])
     @product = Product.find(params[:id])
     respond_to do |format|
       format.html # index.html.erb
@@ -16,40 +18,54 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @category = Category.find(params[:category_id])
+    @product = @category.products.new
   end
 
   def create 
-    @product = Shop.new(product_params)
+    @category = Category.find(params[:category_id])
+    @product = @category.products.new(product_params)
     if @product.save
-      redirect_to @product
+      redirect_to category_products_path(@category)
     else
       render :new, status: :unprocessable_entity  
     end
   end
 
   def edit
-    @product = Product.find(params[:id])
+    @category = Category.find(params[:category_id])
+    @product = @category.products.find(params[:id])
+    
   end
 
-  def update
-    @product = Product.find(params[:id])
+  def update 
+    @category = Category.find(params[:category_id])
+    @product = @category.products.find(params[:id])
     if @product.update(product_params)
-      redirect_to @product
+      redirect_to category_products_path(@category)
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @product = Product.find(params[:id])
+    @category = Category.find(params[:category_id])
+    @product = @category.products.find(params[:id])
     @product.destroy
-    redirect_to products_path, status: :see_other
+    redirect_to category_products_path(@category), status: :see_other
+  end
+
+  def bulk_update
+    @category = Category.find(params[:category_id])
+    @product = @category.products.find(params[:id])
+    @product.shop_products.where(id: params[:shop_product][:shop_products_ids]).update(price: params[:shop_product][:price])
+    redirect_to category_product_path(@category, @product)
+
   end
 
   private
 
   def product_params
-    params.require(:product).permit(:name)
+    params.require(:product).permit(:name, :image)
   end
 end

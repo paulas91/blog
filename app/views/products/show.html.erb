@@ -1,0 +1,54 @@
+  <h1><%= @product.name %></h1>
+  <% @product.shop_products.each do |shop_product| %>
+    <%= shop_product.shop.name %>
+    : <%= shop_product.price %>
+    <br>
+  <% end %>  
+  
+  <hr>
+
+  <%
+=begin%>
+ <div class='row'>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        <%= shop_product.shop.name %>
+      </label>
+    </div>
+  </div> 
+<%
+=end%>
+
+
+
+  <%= form_for(:shop_product, { url: bulk_update_category_product_path(@category, @product) , method: :post }) do |f| %>
+      <div>
+        <%= f.label :price %>
+        <%= f.number_field :price,  step: 0.01  %>
+      </div>
+      <% @product.shop_products.each do |shop_product| %>
+        <div class="form-check">
+          <%= f.check_box :shop_products_ids, {multiple: true, class: "form-check-input"}, shop_product.id, false %> 
+          <%= f.label :shop_products_ids, shop_product.shop.name, class: "form-check-label" %>
+        </div>  
+      <% end %>
+      <%= f.submit %>
+  <% end %>
+
+
+  <%
+=begin%>
+ form_for @week_selection do |f|
+  - days = ['Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat', 'Sun']
+  - days.each do |day|
+    = f.check_box :days, { multiple: true }, day, false
+    label day
+  = f.submit
+
+        
+
+  
+<%
+=end%>
+

@@ -1,6 +1,7 @@
 class Activity < ApplicationRecord
   belongs_to :activitable, polymorphic: true
   belongs_to :user
+  paginates_per 10
   
   enum :action, [ :activitable_create, :activitable_update, :activitable_destroy ]
 

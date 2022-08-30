@@ -1,18 +1,51 @@
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><%= link_to @shop.name, shop_path(@shop) %></a></li>
+    <% if @category.present? %>
+    <li class="breadcrumb-item active" aria-current="page"><%= @category.name %></li>
+    <% end %>
+  </ol>
+</nav>
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">Show Categories</button>
 
-  <h1><%= @shop.name %></h1>
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasTopLabel">Categories</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <% @categories.each do |category| %>
+      <%= link_to category.name, shop_path(@shop, category_id: category.id), class: "btn btn-sm #{category.id == params[:category_id].to_i ? "btn-secondary disabled" : "btn-info"}" %>
+    <% end %>
+  </div>
+</div>
+  <%
+=begin%>
+ <h1><%= @shop.name %></h1>
   <p><%= @shop.domain %></p>
   <p><%= @shop.adress %></p>
-  <p><%= @shop.description %></p>
-  <% @shop.shop_products.each do |shop_product| %>
-    <div class="card" style="width: 18rem;">
-      <%= shop_product.product.name %><br>
-      <%= shop_product.product.category.name %><br>
-      ilość: <%= shop_product.inventory_state %><br>
-      cena: <%= shop_product.price %> zł
-      <%= link_to "edit", edit_shop_shop_product_path(@shop, shop_product) %>
-      <hr>
-    </div>
+  <p><%= @shop.description %></p> 
+<%
+=end%>
+  <div class='row'>
+    <% @shop_products.each do |shop_product| %>
+      <div class="card" style="width: 18rem;">
+        <%=image_tag('No_image_available.svg', class: 'card-img-top')  %>
+        <div class="card-body">
+          <h5 class="card-title"><%= shop_product.product.name %></h5>
+          <p class="card-text">
+            <%= shop_product.product.category.name %>
+            ilość: <%= shop_product.inventory_state %><br>
+            cena: <%= shop_product.price %> zł
+          </p>
+          <%= link_to "edit", edit_shop_shop_product_path(@shop, shop_product) %>
+        </div>
+      </div>
     <% end %>
-    <br>
-  <p>tel: <%= @shop.phone %></p>
-  <%= link_to "Edit", edit_shop_path(@shop) %>
+  </div>
+    <%
+=begin%>
+ <p>tel: <%= @shop.phone %></p> 
+<%
+=end%>
+    <%= link_to "Edit Shop", edit_shop_path(@shop) %>

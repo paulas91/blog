@@ -1,0 +1,14 @@
+
+  <%= link_to "Add new product", new_category_product_path(@category) %>
+
+<% @category.products.each do |product| %>
+  <p><%= product.name %></p>
+  
+<% end %>  
+
+
+
+
+
+
+

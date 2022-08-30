@@ -17,7 +17,13 @@ class ShopsController < ApplicationController
   end
 
   def show
+    @categories = Category.all 
     @shop = Shop.find(params[:id])
+    @shop_products = @shop.shop_products
+    if params[:category_id]
+      @category = @categories.find(params[:category_id])
+      @shop_products = @shop_products.joins(:product).where("products.category_id = ?", @category.id)
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @shop }
