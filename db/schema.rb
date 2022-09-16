@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_24_201831) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_15_115419) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -73,10 +73,27 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_201831) do
   create_table "artists", force: :cascade do |t|
     t.string "name"
     t.text "body"
-    t.text "music_style"
+    t.string "music_style"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
+  end
+
+  create_table "basket_products", force: :cascade do |t|
+    t.integer "number_products"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "product_id", null: false
+    t.integer "basket_id", null: false
+    t.index ["basket_id"], name: "index_basket_products_on_basket_id"
+    t.index ["product_id"], name: "index_basket_products_on_product_id"
+  end
+
+  create_table "baskets", force: :cascade do |t|
+    t.integer "shop_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shop_id"], name: "index_baskets_on_shop_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -189,6 +206,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_24_201831) do
   add_foreign_key "activities", "users"
   add_foreign_key "albums", "artists"
   add_foreign_key "articles", "users"
+  add_foreign_key "basket_products", "baskets"
+  add_foreign_key "basket_products", "products"
+  add_foreign_key "baskets", "shops"
   add_foreign_key "comments", "articles"
   add_foreign_key "comments", "users"
   add_foreign_key "measurement_values", "measurements"

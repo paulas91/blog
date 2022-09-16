@@ -1,7 +1,9 @@
 class Product < ApplicationRecord
+  has_many :basket_products, dependent: :destroy
   has_many :shop_products, dependent: :destroy
   has_many :shops, through: :shop_products
   belongs_to :category
+  belongs_to :basket
   
   has_one_attached :image do |attachable|
     attachable.variant :thumb, resize: "100x100"
