@@ -2,18 +2,16 @@ Rails.application.routes.draw do
   namespace :devise do
     devise_for :users
   end
-  
-  get "/about_me", to: "static_sites#about_me"
 
-  
-  
+  get "/about_me", to: "static_sites#about_me"
   root "users#index"
   resources :articles do
     resources :comments, only: [:create]
     post 'change_status', on: :member
   end
   resources :shops do
-    resources :shop_products, only: [:update, :edit]
+    resources :shop_products, only: %i(update edit)
+    resources :baskets, only: [:show, :create]
   end
   resources :users
   resources :songs
@@ -26,8 +24,7 @@ Rails.application.routes.draw do
       post "bulk_update", on: :member
     end
   end
-  
-  
+
   resources :uploads, except: [:delete, :edit, :update] do
     post "process_file", on: :member
     resources :measurements, only: [:index, :show] 
@@ -38,4 +35,3 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
 end
-

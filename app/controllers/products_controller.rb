@@ -35,7 +35,6 @@ class ProductsController < ApplicationController
   def edit
     @category = Category.find(params[:category_id])
     @product = @category.products.find(params[:id])
-    
   end
 
   def update 
@@ -44,6 +43,7 @@ class ProductsController < ApplicationController
     if @product.update(product_params)
       redirect_to category_products_path(@category)
     else
+      flash[:alert] = @product.errors.full_messages
       render :edit, status: :unprocessable_entity
     end
   end
