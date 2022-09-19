@@ -12,6 +12,9 @@
 
   <body>
     <div class="topnav">
+      <% if @basket %>
+        <%= link_to "cart", shop_basket_path(@shop, @basket) %>
+      <% end %> 
       <%= link_to "Articles", articles_path %>
       <%= link_to "Archived articles", articles_path(filter: {status: "archived"})%>
       <%= link_to "Private articles", articles_path(filter: {status: "private"})%>
@@ -32,8 +35,8 @@
           <%= link_to "Log in", new_devise_user_session_path %>
         <% end %>  
       </div>
-
     </div>
+    
     <div class="container-fluid">
       <% if notice %>
         <p class="alert alert-success"><%= notice %></p>

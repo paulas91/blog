@@ -5,6 +5,7 @@ class Shop < ApplicationRecord
   has_many :activities, as: :activitable
   has_many :shop_products
   has_many :products, through: :shop_products
+  has_many :baskets
   
   def self.search(query)
       where("LOWER(name) LIKE LOWER(?)", "%" + sanitize_sql_like(query) + "%").or(

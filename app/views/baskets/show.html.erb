@@ -1,0 +1,8 @@
+<% @basket.basket_products.each do |basket_product| %>
+  <%= basket_product.product.name %>
+  : <%= basket_product.number_products %><br>
+<% end %>
+
+<%= render partial: @basket.state %>
+
+

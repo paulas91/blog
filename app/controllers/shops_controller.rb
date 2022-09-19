@@ -19,6 +19,10 @@ class ShopsController < ApplicationController
   def show
     @categories = Category.all
     @shop = Shop.find(params[:id])
+    @basket = @shop.baskets.where(user_id: current_devise_user.id, state: Basket.states[:init]).first
+    if @basket
+      @basket_products = @basket.basket_products
+    end
     @shop_products = @shop.shop_products
     if params[:category_id]
       @category = @categories.find(params[:category_id])

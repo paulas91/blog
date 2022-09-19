@@ -39,8 +39,9 @@
             cena: <%= shop_product.price %> zł
           </p>
           <%= link_to "edit", edit_shop_shop_product_path(@shop, shop_product) %>
-          <%= form_for(:basket, { url: shop_baskets_path(@shop), method: :post }) do |f| %>
-            <%= f.number_field :number_products %>
+          <%= form_for(:cart, { url: shop_baskets_path(@shop), method: :post }) do |f| %>
+            
+            <%= f.number_field :number_products, value: basket_number_of_product(shop_product, @basket_products) %>
             <%= f.hidden_field :product_id, value: shop_product.product_id %>
           <%= f.submit "Add" %>
           <% end %>  

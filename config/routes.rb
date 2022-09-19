@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
   resources :shops do
     resources :shop_products, only: %i(update edit)
-    resources :baskets, only: [:show, :create]
+    resources :baskets, only: [:show, :create, :update]
   end
   resources :users
   resources :songs
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   resources :uploads, except: [:delete, :edit, :update] do
     post "process_file", on: :member
-    resources :measurements, only: [:index, :show] 
+    resources :measurements, only: [:index, :show]
   end
   # /articles/:id/change_status
   # post "/articles/:id/change_status" => "articles#change_status", :as => :articles_change_status
