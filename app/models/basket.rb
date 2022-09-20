@@ -11,9 +11,11 @@ class Basket < ApplicationRecord
   ].freeze
 
   STATES_WITHOUT_CANCELLED = STATES - [:cancelled]
-
+  
+  belongs_to :delivery
   belongs_to :user
   belongs_to :shop
+  has_many :basket_adresses
   has_many :products, through: :basket_products
   has_many :basket_products, dependent: :destroy
 
@@ -31,14 +33,14 @@ class Basket < ApplicationRecord
     event :confirm do
       transitions from: :init, to: :confirmed
     end
-    event :provide_adress do
-      transitions from: :confirmed, to: :adress_provided
-    end
     event :choose_delivery do
-      transitions from: :adress_provided, to: :delivery_provided
+      transitions from: :confirmed, to: :delivery_provided
+    end
+    event :provide_adress do
+      transitions from: :delivery_provided, to: :adress_provided
     end
     event :pay do
-      transitions from: :delivery_provided, to: :paid
+      transitions from: [:delivery_provided, :adress_provided], to: :paid
     end
     event :finish do
       transitions from: %i[delivery_provided paid], to: :done

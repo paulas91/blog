@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   end
   resources :shops do
     resources :shop_products, only: %i(update edit)
-    resources :baskets, only: [:show, :create, :update]
+    resources :baskets, only: [:show, :create, :update] do
+      resources :adresses, only: [:create]
+    end
   end
   resources :users
   resources :songs

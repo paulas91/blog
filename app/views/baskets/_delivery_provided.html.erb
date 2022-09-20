@@ -1,0 +1,22 @@
+
+<%= form_for(:adress, { url: shop_basket_adresses_path(@shop, @basket), method: :post }) do |form| %>
+  <div>
+    <%= form.label :street %><br>
+    <%= form.text_field :street %>
+  </div>
+  <div>
+    <%= form.label :city %><br>
+    <%= form.text_area :city %><br>
+  </div>
+  <div>
+    <%= form.label :home_number %><br>
+    <%= form.text_area :home_number %><br>
+  </div>
+  <div>
+    <%= form.label :zip_code %><br>
+    <%= form.text_area :zip_code %><br>
+  </div>
+  <div>
+    <%= form.submit "Create" %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_19_195001) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,6 +50,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
     t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
+  create_table "adresses", force: :cascade do |t|
+    t.string "street"
+    t.string "city"
+    t.string "home_number"
+    t.string "zip_code"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_adresses_on_user_id"
+  end
+
   create_table "albums", force: :cascade do |t|
     t.string "name"
     t.string "year"
@@ -79,6 +90,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
     t.string "email"
   end
 
+  create_table "basket_adresses", force: :cascade do |t|
+    t.integer "adress_id", null: false
+    t.integer "basket_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["adress_id"], name: "index_basket_adresses_on_adress_id"
+    t.index ["basket_id"], name: "index_basket_adresses_on_basket_id"
+  end
+
   create_table "basket_products", force: :cascade do |t|
     t.integer "number_products"
     t.datetime "created_at", null: false
@@ -95,6 +115,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
     t.datetime "updated_at", null: false
     t.integer "state"
     t.integer "user_id"
+    t.integer "delivery_id"
+    t.index ["delivery_id"], name: "index_baskets_on_delivery_id"
     t.index ["shop_id"], name: "index_baskets_on_shop_id"
     t.index ["user_id"], name: "index_baskets_on_user_id"
   end
@@ -115,6 +137,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
     t.integer "user_id", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.string "name"
+    t.integer "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "fitnesses", force: :cascade do |t|
@@ -207,10 +236,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_100609) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "users"
+  add_foreign_key "adresses", "users"
   add_foreign_key "albums", "artists"
   add_foreign_key "articles", "users"
+  add_foreign_key "basket_adresses", "adresses"
+  add_foreign_key "basket_adresses", "baskets"
   add_foreign_key "basket_products", "baskets"
   add_foreign_key "basket_products", "products"
+  add_foreign_key "baskets", "deliveries"
   add_foreign_key "baskets", "shops"
   add_foreign_key "baskets", "users"
   add_foreign_key "comments", "articles"

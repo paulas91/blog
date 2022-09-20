@@ -1,7 +1,6 @@
 class  BasketsController < ApplicationController
   def show
     @shop = Shop.find(params[:shop_id])
-    @shop_product = @shop.shop_products.find(params[:id])
     @basket = @shop.baskets.find(params[:id])
   end
 
@@ -20,8 +19,18 @@ class  BasketsController < ApplicationController
   def update
     @shop = Shop.find(params[:shop_id])
     @basket = @shop.baskets.find(params[:id])
-    if params[:cart][:event] == "confirm"
-      @basket.confirm!
+    if params[:cart][:event]
+      if params[:cart][:event] == "confirm"
+        @basket.confirm!
+      elsif params[:cart][:event] == "cancel"
+        @basket.cancel!
+      end
+    elsif params[:cart][:delivery_id]
+      @basket.delivery_id = params[:cart][:delivery_id]
+      if @basket.save
+        @basket.choose_delivery!
+      end
+
     end
     redirect_to shop_basket_path(@shop, @basket)
   end
