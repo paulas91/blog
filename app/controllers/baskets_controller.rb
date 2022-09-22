@@ -2,6 +2,7 @@ class  BasketsController < ApplicationController
   def show
     @shop = Shop.find(params[:shop_id])
     @basket = @shop.baskets.find(params[:id])
+
   end
 
   def create
@@ -30,7 +31,6 @@ class  BasketsController < ApplicationController
       if @basket.save
         @basket.choose_delivery!
       end
-
     end
     redirect_to shop_basket_path(@shop, @basket)
   end
