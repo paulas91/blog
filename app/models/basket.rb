@@ -11,8 +11,8 @@ class Basket < ApplicationRecord
   ].freeze
 
   STATES_WITHOUT_CANCELLED = STATES - [:cancelled]
-  
-  belongs_to :delivery
+
+  belongs_to :delivery, optional: true
   belongs_to :user
   belongs_to :shop
   has_many :basket_adresses

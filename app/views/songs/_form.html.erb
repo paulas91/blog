@@ -13,7 +13,7 @@
     <% song.errors.full_messages_for(:body).each do |message| %>
       <div><%= message %></div>
     <% end %>
-  </div>  
+  </div>
   <div>
     <%= form.label :album %><br>
     <%= form.select :album_id, options_for_select(Album.all.map{|a|[a.name, a.id]}) %>

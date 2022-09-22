@@ -1,0 +1,5 @@
+wybierz płatnośśćcćć
+<%= form_for(:cart, { url: shop_basket_path(@shop, @basket), method: :put }) do |f| %>
+  <%= f.hidden_field :event, value: "cancel" %>
+  <%= f.submit "cancel" %>
+<% end %>

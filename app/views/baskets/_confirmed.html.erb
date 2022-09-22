@@ -1,1 +1,11 @@
-bajhdwhl
+<%= form_for(:cart, { url: shop_basket_path(@shop, @basket), method: :put }) do |form| %>
+  <%= form.label :delivery %><br>
+  <%= form.select :delivery_id, options_for_select(Delivery.all.map{|d|[d.name, d.id]}) %>
+  <%= form.submit "select" %>
+<% end %>
+
+<%= form_for(:cart, { url: shop_basket_path(@shop, @basket), method: :put }) do |f| %>
+  <%= f.hidden_field :event, value: "cancel" %>
+  <%= f.submit "cancel" %>
+<% end %>
+
